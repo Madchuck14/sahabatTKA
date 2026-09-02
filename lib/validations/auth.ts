@@ -9,12 +9,16 @@ export const loginSchema = z.object({
 
 export const registerSiswaSchema = z.object({
   email: z.string().email("Email tidak valid"),
-  password: z.string().min(6, "Password minimal 6 karakter"),
+  password: z.string().min(8, "Password minimal 8 karakter"),
   nama: z.string().min(1, "Nama wajib diisi"),
-  umur: z.coerce.number().int().positive().optional(),
-  alamat: z.string().optional(),
+  umur: z.coerce
+    .number({ message: "Umur wajib diisi" })
+    .int()
+    .min(5, "Umur minimal 5 tahun")
+    .max(25, "Umur maksimal 25 tahun"),
+  alamat: z.string().min(1, "Alamat wajib diisi"),
   jenjang: jenjangEnum,
-  kelas: z.string().optional(),
+  kelas: z.string().min(1, "Kelas wajib diisi"),
 });
 
 export const registerGuruSchema = z.object({
