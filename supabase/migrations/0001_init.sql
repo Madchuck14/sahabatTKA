@@ -9,7 +9,6 @@ create table profiles_siswa (
   umur int,
   alamat text,
   jenjang jenjang_type not null,
-  kelas text,
   avatar_url text,
   created_at timestamptz not null default now()
 );

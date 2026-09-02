@@ -19,7 +19,6 @@ export const registerSiswaSchema = z.object({
     .max(25, "Umur maksimal 25 tahun"),
   alamat: z.string().min(1, "Alamat wajib diisi"),
   jenjang: jenjangEnum,
-  kelas: z.string().min(1, "Kelas wajib diisi"),
 });
 
 export const registerGuruSchema = z.object({

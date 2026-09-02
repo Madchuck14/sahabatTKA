@@ -50,7 +50,6 @@ export default function RegisterSiswaPage() {
       umur: data.umur,
       alamat: data.alamat,
       jenjang: data.jenjang,
-      kelas: data.kelas,
     });
     if (profileError) {
       toast.error(profileError.message);
@@ -101,27 +100,17 @@ export default function RegisterSiswaPage() {
           />
         </Field>
 
-        <div className="mt-4 grid grid-cols-2 gap-3">
-          <Field label="Umur" htmlFor="umur" error={errors.umur?.message}>
-            <input
-              id="umur"
-              type="number"
-              min={5}
-              max={25}
-              placeholder="Tahun"
-              className="input"
-              {...register("umur")}
-            />
-          </Field>
-          <Field label="Kelas" htmlFor="kelas" error={errors.kelas?.message}>
-            <input
-              id="kelas"
-              placeholder="Mis. 11"
-              className="input"
-              {...register("kelas")}
-            />
-          </Field>
-        </div>
+        <Field label="Umur" htmlFor="umur" error={errors.umur?.message}>
+          <input
+            id="umur"
+            type="number"
+            min={5}
+            max={25}
+            placeholder="Tahun"
+            className="input"
+            {...register("umur")}
+          />
+        </Field>
 
         <Field label="Alamat" htmlFor="alamat" error={errors.alamat?.message}>
           <input

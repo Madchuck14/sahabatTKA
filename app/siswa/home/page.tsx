@@ -20,7 +20,7 @@ const GURU_ONLINE = [
 ];
 
 export default function SiswaHomePage() {
-  const siswa = { nama: "Rara", kelas: "Kelas 11" };
+  const siswa = { nama: "Rara", jenjang: "SMA" };
 
   return (
     <div className="flex min-h-dvh flex-col bg-ground font-body text-ink">
@@ -32,7 +32,7 @@ export default function SiswaHomePage() {
               HaloGuru
             </span>
             <span className="text-[11px] font-semibold opacity-90">
-              {siswa.nama} · {siswa.kelas}
+              {siswa.nama} · {siswa.jenjang}
             </span>
           </div>
 

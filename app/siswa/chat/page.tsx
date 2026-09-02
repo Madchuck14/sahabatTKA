@@ -40,7 +40,7 @@ export default function SiswaChatListPage() {
           <span className="font-heading text-[12px] font-extrabold uppercase tracking-[0.18em]">
             HaloGuru
           </span>
-          <span className="text-[11px] font-semibold opacity-90">Rara · Kelas 11</span>
+          <span className="text-[11px] font-semibold opacity-90">Rara · SMA</span>
         </div>
         <h1 className="mt-5 font-heading text-[30px] font-black leading-[0.98] -tracking-[0.03em]">
           CHAT KAMU
