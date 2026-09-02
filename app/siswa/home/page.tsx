@@ -21,7 +21,6 @@ const GURU_ONLINE = [
 
 export default function SiswaHomePage() {
   const siswa = { nama: "Rara", kelas: "Kelas 11" };
-  const totalGuru = 48;
 
   return (
     <div className="flex min-h-dvh flex-col bg-ground font-body text-ink">
@@ -38,20 +37,18 @@ export default function SiswaHomePage() {
           </div>
 
           <h1 className="mt-7 font-heading text-[40px] font-black leading-[0.95] -tracking-[0.03em]">
-            TANYA
+            TEMAN
             <br />
-            GURU,
+            PERSIAPAN
             <br />
-            KAPAN
-            <br />
-            AJA.
+            TKA-MU
           </h1>
 
           <div className="my-5 h-0.5 bg-white/50" />
 
           <div className="flex items-center justify-between gap-3">
             <p className="max-w-[200px] text-[13px] leading-snug text-white/90">
-              {totalGuru} guru Erlangga siap bantu PR kamu hari ini.
+              Buat persiapan TKA-mu jadi lebih mudah
             </p>
             <Link
               href="/siswa/guru/1"
@@ -95,7 +92,7 @@ export default function SiswaHomePage() {
         {/* MAPEL — grid modular 3 kolom, dipisah rule 2px */}
         <section>
           <h2 className="px-5 pb-2.5 pt-6 font-heading text-[10.5px] font-extrabold uppercase tracking-[0.14em] text-brand">
-            Mapel kamu
+            Mata Uji
           </h2>
 
           <ul className="mx-5 mb-7 grid grid-cols-3 gap-0.5 border-2 border-ink bg-ink">
