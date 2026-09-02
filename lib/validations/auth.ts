@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const jenjangEnum = z.enum(["SD", "SMP/MTs", "SMA/MA/SMK"]);
+export const jenjangEnum = z.enum(["SD", "SMP", "SMA", "SMK"]);
 
 export const loginSchema = z.object({
   email: z.string().email("Email tidak valid"),

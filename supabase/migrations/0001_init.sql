@@ -1,6 +1,6 @@
 -- HaloGuru initial schema
 
-create type jenjang_type as enum ('SD', 'SMP/MTs', 'SMA/MA/SMK');
+create type jenjang_type as enum ('SD', 'SMP', 'SMA', 'SMK');
 
 create table profiles_siswa (
   id uuid primary key references auth.users (id) on delete cascade,
@@ -19,7 +19,7 @@ create table profiles_guru (
   gelar text,
   umur int,
   alamat text,
-  jenjang jenjang_type not null,
+  jenjang jenjang_type not null, -- jenjang yang diajar
   rating_avg numeric(2, 1) default 0,
   avatar_url text,
   created_at timestamptz not null default now()
@@ -168,16 +168,14 @@ create policy "avatar: user hapus file sendiri"
 -- Seed subjects
 insert into subjects (nama, jenjang) values
   ('Bahasa Indonesia', 'SD'),
-  ('Bahasa Inggris', 'SD'),
-  ('IPA', 'SD'),
   ('Matematika', 'SD'),
-  ('Bahasa Indonesia', 'SMP/MTs'),
-  ('Bahasa Inggris', 'SMP/MTs'),
-  ('IPA', 'SMP/MTs'),
-  ('Matematika', 'SMP/MTs'),
-  ('Bahasa Indonesia', 'SMA/MA/SMK'),
-  ('Bahasa Inggris', 'SMA/MA/SMK'),
-  ('Fisika', 'SMA/MA/SMK'),
-  ('Biologi', 'SMA/MA/SMK'),
-  ('Kimia', 'SMA/MA/SMK'),
-  ('Matematika', 'SMA/MA/SMK');
+  ('Bahasa Indonesia', 'SMP'),
+  ('Matematika', 'SMP'),
+  ('Fisika', 'SMA'),
+  ('Biologi', 'SMA'),
+  ('Kimia', 'SMA'),
+  ('Matematika Tingkat Lanjut', 'SMA'),
+  ('Matematika Wajib', 'SMA'),
+  ('Matematika Wajib', 'SMK'),
+  ('Bahasa Indonesia', 'SMK'),
+  ('Bahasa Inggris', 'SMK');
