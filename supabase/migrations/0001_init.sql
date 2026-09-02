@@ -9,6 +9,7 @@ create table profiles_siswa (
   alamat text,
   jenjang jenjang_type not null,
   kelas text,
+  avatar_url text,
   created_at timestamptz not null default now()
 );
 
@@ -20,6 +21,7 @@ create table profiles_guru (
   alamat text,
   jenjang jenjang_type not null,
   rating_avg numeric(2, 1) default 0,
+  avatar_url text,
   created_at timestamptz not null default now()
 );
 
@@ -132,6 +134,36 @@ create policy "review: publik select"
 
 create policy "review: siswa insert milik sendiri"
   on reviews for insert with check (auth.uid() = siswa_id);
+
+-- Storage bucket untuk foto profil (siswa & guru)
+insert into storage.buckets (id, name, public)
+values ('avatars', 'avatars', true)
+on conflict (id) do nothing;
+
+create policy "avatar: publik select"
+  on storage.objects for select
+  using (bucket_id = 'avatars');
+
+create policy "avatar: user upload folder sendiri"
+  on storage.objects for insert
+  with check (
+    bucket_id = 'avatars'
+    and (storage.foldername(name))[1] = auth.uid()::text
+  );
+
+create policy "avatar: user update file sendiri"
+  on storage.objects for update
+  using (
+    bucket_id = 'avatars'
+    and (storage.foldername(name))[1] = auth.uid()::text
+  );
+
+create policy "avatar: user hapus file sendiri"
+  on storage.objects for delete
+  using (
+    bucket_id = 'avatars'
+    and (storage.foldername(name))[1] = auth.uid()::text
+  );
 
 -- Seed subjects
 insert into subjects (nama, jenjang) values
