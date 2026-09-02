@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, MessageCircle, User } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { House, MessageSquare, User } from "lucide-react";
 
 export function BottomNav({ role }: { role: "siswa" | "guru" }) {
   const pathname = usePathname();
@@ -11,33 +10,44 @@ export function BottomNav({ role }: { role: "siswa" | "guru" }) {
   const items =
     role === "siswa"
       ? [
-          { href: "/siswa/home", label: "Beranda", icon: Home },
-          { href: "/siswa/chat", label: "Chat", icon: MessageCircle },
+          { href: "/siswa/home", label: "Beranda", icon: House },
+          { href: "/siswa/chat", label: "Chat", icon: MessageSquare },
           { href: "/siswa/akun", label: "Akun", icon: User },
         ]
       : [
-          { href: "/guru/chat", label: "Chat", icon: MessageCircle },
+          { href: "/guru/chat", label: "Chat", icon: MessageSquare },
           { href: "/guru/akun", label: "Akun", icon: User },
         ];
 
   return (
-    <nav className="sticky bottom-0 flex border-t bg-background">
-      {items.map(({ href, label, icon: Icon }) => {
-        const active = pathname.startsWith(href);
-        return (
-          <Link
-            key={href}
-            href={href}
-            className={cn(
-              "flex flex-1 flex-col items-center gap-1 py-2 text-xs",
-              active ? "text-primary" : "text-muted-foreground"
-            )}
-          >
-            <Icon className="h-5 w-5" />
-            {label}
-          </Link>
-        );
-      })}
+    <nav className="shrink-0 border-t-2 border-ink bg-white pb-[calc(env(safe-area-inset-bottom)+10px)] pt-2.5">
+      <ul className="flex">
+        {items.map(({ href, label, icon: Icon }) => {
+          const active = pathname.startsWith(href);
+          return (
+            <li key={href} className="flex-1">
+              <Link
+                href={href}
+                aria-current={active ? "page" : undefined}
+                className={`flex min-h-11 flex-col items-center gap-1.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
+                  active ? "text-brand" : "text-ink/45"
+                }`}
+              >
+                <Icon size={21} strokeWidth={2.2} />
+                <span
+                  className={
+                    active
+                      ? "font-heading text-[10px] font-extrabold tracking-[0.06em]"
+                      : "text-[10px] font-semibold tracking-[0.06em]"
+                  }
+                >
+                  {label}
+                </span>
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
     </nav>
   );
 }

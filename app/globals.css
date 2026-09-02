@@ -9,7 +9,19 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-heading: var(--font-archivo);
+  --font-body: var(--font-archivo);
+  --color-ground: var(--ground);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-brand: var(--brand);
+  --color-brand-100: var(--brand-100);
+  --color-brand-200: var(--brand-200);
+  --color-brand-300: var(--brand-300);
+  --color-brand-600: var(--brand-600);
+  --color-brand-700: var(--brand-700);
+  --color-neutral-200: var(--neutral-200);
+  --color-neutral-300: var(--neutral-300);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -49,6 +61,19 @@
 }
 
 :root {
+  /* Modernist design tokens — dipakai di layar siswa (home/chat) */
+  --ground: #f3f2f2;
+  --surface: #eae9e9;
+  --ink: #201e1d;
+  --brand: #ec3013;
+  --brand-100: #fff2ef;
+  --brand-200: #ffe0d9;
+  --brand-300: #ffc4b8;
+  --brand-600: #dd2b0f;
+  --brand-700: #ae1800;
+  --neutral-200: #e4e2e2;
+  --neutral-300: #cfcccc;
+
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);

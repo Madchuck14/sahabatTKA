@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Archivo } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/providers/query-provider";
 import { Toaster } from "sonner";
@@ -14,6 +14,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const archivo = Archivo({
+  variable: "--font-archivo",
+  weight: ["400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   title: "HaloGuru",
   description: "Platform konsultasi siswa-guru HaloGuru",
@@ -23,7 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${archivo.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <QueryProvider>
