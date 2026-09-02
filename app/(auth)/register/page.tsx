@@ -46,6 +46,7 @@ export default function RegisterSiswaPage() {
     const { error: profileError } = await supabase.from("profiles_siswa").insert({
       id: signUp.user.id,
       nama: data.nama,
+      nis: data.nis,
       umur: data.umur,
       alamat: data.alamat,
       jenjang: data.jenjang,
@@ -88,6 +89,15 @@ export default function RegisterSiswaPage() {
             placeholder="Nama sesuai identitas"
             className="input"
             {...register("nama")}
+          />
+        </Field>
+
+        <Field label="NIS" htmlFor="nis" error={errors.nis?.message}>
+          <input
+            id="nis"
+            placeholder="Nomor Induk Siswa"
+            className="input"
+            {...register("nis")}
           />
         </Field>
 

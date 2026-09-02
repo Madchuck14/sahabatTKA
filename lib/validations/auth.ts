@@ -11,6 +11,7 @@ export const registerSiswaSchema = z.object({
   email: z.string().email("Email tidak valid"),
   password: z.string().min(8, "Password minimal 8 karakter"),
   nama: z.string().min(1, "Nama wajib diisi"),
+  nis: z.string().min(1, "NIS wajib diisi"),
   umur: z.coerce
     .number({ message: "Umur wajib diisi" })
     .int()

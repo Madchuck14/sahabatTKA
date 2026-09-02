@@ -5,6 +5,7 @@ create type jenjang_type as enum ('SD', 'SMP', 'SMA', 'SMK');
 create table profiles_siswa (
   id uuid primary key references auth.users (id) on delete cascade,
   nama text not null,
+  nis text not null unique,
   umur int,
   alamat text,
   jenjang jenjang_type not null,
