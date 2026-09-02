@@ -20,21 +20,16 @@ const GURU_ONLINE = [
 ];
 
 export default function SiswaHomePage() {
-  const siswa = { nama: "Rara", jenjang: "SMA" };
+  const siswa = { nama: "Sahabat TKA" };
 
   return (
     <div className="flex min-h-dvh flex-col bg-ground font-body text-ink">
       <div className="flex-1 overflow-y-auto">
         {/* HERO — poster merah, semuanya flush left, tanpa radius */}
         <header className="bg-brand px-5 pb-6 pt-14 text-white">
-          <div className="flex items-center justify-between">
-            <span className="font-heading text-[12px] font-extrabold uppercase tracking-[0.18em]">
-              HaloGuru
-            </span>
-            <span className="text-[11px] font-semibold opacity-90">
-              {siswa.nama} · {siswa.jenjang}
-            </span>
-          </div>
+          <span className="font-heading text-[12px] font-extrabold uppercase tracking-[0.18em]">
+            Halo, {siswa.nama}
+          </span>
 
           <h1 className="mt-7 font-heading text-[40px] font-black leading-[0.95] -tracking-[0.03em]">
             TEMAN

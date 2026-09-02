@@ -36,12 +36,9 @@ export default function SiswaChatListPage() {
     <div className="flex min-h-dvh flex-col bg-ground font-body text-ink">
       {/* HEADER merah — lanjutan bahasa hero home */}
       <header className="shrink-0 bg-brand px-5 pb-4 pt-14 text-white">
-        <div className="flex items-center justify-between">
-          <span className="font-heading text-[12px] font-extrabold uppercase tracking-[0.18em]">
-            HaloGuru
-          </span>
-          <span className="text-[11px] font-semibold opacity-90">Rara · SMA</span>
-        </div>
+        <span className="font-heading text-[12px] font-extrabold uppercase tracking-[0.18em]">
+          Halo, Sahabat TKA
+        </span>
         <h1 className="mt-5 font-heading text-[30px] font-black leading-[0.98] -tracking-[0.03em]">
           CHAT KAMU
         </h1>
