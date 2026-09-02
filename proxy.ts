@@ -1,7 +1,11 @@
 import { type NextRequest } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+    // Supabase belum dikonfigurasi (lihat .env.example) — lewati auth check.
+    return;
+  }
   return await updateSession(request);
 }
 
