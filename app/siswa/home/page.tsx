@@ -4,7 +4,13 @@ import { ArrowRight } from "lucide-react";
 import { BottomNav } from "@/components/BottomNav";
 import { createClient } from "@/lib/supabase/server";
 
+const KODE_KHUSUS: Record<string, string> = {
+  "Matematika Tingkat Lanjut": "Mat TL",
+  "Matematika Wajib": "Mat Wajib",
+};
+
 function subjectCode(nama: string) {
+  if (KODE_KHUSUS[nama]) return KODE_KHUSUS[nama];
   const kata = nama.trim().split(/\s+/);
   if (kata.length === 1) return kata[0].slice(0, 3).toUpperCase();
   return kata.map((k) => k[0]).join("").toUpperCase();
@@ -27,11 +33,14 @@ export default async function SiswaHomePage() {
     ? await subjectsQuery.eq("jenjang", profile.jenjang)
     : await subjectsQuery;
 
-  const SUBJECTS = (subjectRows ?? []).map((s) => ({
-    id: s.id,
-    kode: subjectCode(s.nama),
-    nama: s.nama,
-  }));
+  // "Matematika" (umum) tumpang tindih dengan Matematika Wajib/Tingkat Lanjut di jenjang SMA
+  const SUBJECTS = (subjectRows ?? [])
+    .filter((s) => !(profile?.jenjang === "SMA" && s.nama === "Matematika"))
+    .map((s) => ({
+      id: s.id,
+      kode: subjectCode(s.nama),
+      nama: s.nama,
+    }));
 
   const { data: guruRows } = await supabase
     .from("profiles_guru")
