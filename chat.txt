@@ -1,0 +1,40 @@
+Bu Sinta:
+Hai, Rara! 👋
+Ada soal yang ingin kamu tanyakan?
+
+Rara:
+Bu, aku mau tanya nomor 21. Aku bingung cara cari nilai dari data ke-50 persen. Aku udah coba 3 kali tapi jawabannya selalu beda😭
+
+Bu Sinta:
+Oke, Rara. Coba kita lihat bersama, ya. 😊
+Menurutmu, data ke-50 persen itu menunjukkan apa?
+
+Rara:
+Apa berarti data yang ada di tengah?
+
+Bu Sinta:
+Betul. 👍
+Kalau kita mencari data pada posisi 50%, istilahnya apa, ya?
+
+Rara:
+Median, Bu?
+
+Bu Sinta:
+Nah, betul. Sekarang coba kita cari dulu jumlah seluruh data dari tabel tersebut.
+
+Rara:
+3 + 7 + 10 + 12 + 11 + 6 + 1 = 50, Bu.
+
+Bu Sinta:
+Bagus. 😊
+Jadi, posisi median ada di sekitar data ke-25 dan ke-26.
+Sekarang coba lihat frekuensi kumulatifnya. Data ke-25 dan ke-26 masuk kelas berapa?
+
+Rara:
+Yang kelas 48,5–54,5 ya, Bu?
+
+Bu Sinta:
+Iya, tepat! 🎉
+Sekarang tinggal kita masukkan ke rumus median. Coba kamu lanjutkan.
+
+Rara:

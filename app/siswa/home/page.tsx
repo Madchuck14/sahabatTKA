@@ -1,26 +1,54 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { BottomNav } from "@/components/BottomNav";
+import { createClient } from "@/lib/supabase/server";
 
-// TODO: ganti dengan query Supabase — subjects where jenjang = profil.jenjang
-const SUBJECTS = [
-  { id: "1", kode: "FIS", nama: "Fisika" },
-  { id: "2", kode: "BIO", nama: "Biologi" },
-  { id: "3", kode: "KIM", nama: "Kimia" },
-  { id: "4", kode: "MTL", nama: "Matematika Tingkat Lanjut" },
-  { id: "5", kode: "MTW", nama: "Matematika Wajib" },
-  { id: "6", kode: "BI", nama: "Bahasa Indonesia" },
-];
+function subjectCode(nama: string) {
+  const kata = nama.trim().split(/\s+/);
+  if (kata.length === 1) return kata[0].slice(0, 3).toUpperCase();
+  return kata.map((k) => k[0]).join("").toUpperCase();
+}
 
-// TODO: ganti dengan query guru online (presence/last_seen) + rating_avg
-const GURU_ONLINE = [
-  { id: "a", nama: "Bu Sinta W.", mapel: "Matematika", rating: "4,9" },
-  { id: "b", nama: "Pak Dwi H.", mapel: "Fisika", rating: "4,8" },
-  { id: "c", nama: "Bu Ayu P.", mapel: "Biologi", rating: "4,7" },
-];
-
-export default function SiswaHomePage() {
+export default async function SiswaHomePage() {
   const siswa = { nama: "Sahabat TKA" };
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const { data: profile } = user
+    ? await supabase.from("profiles_siswa").select("jenjang").eq("id", user.id).maybeSingle()
+    : { data: null };
+
+  const subjectsQuery = supabase.from("subjects").select("id, nama").order("nama");
+  const { data: subjectRows } = profile?.jenjang
+    ? await subjectsQuery.eq("jenjang", profile.jenjang)
+    : await subjectsQuery;
+
+  const SUBJECTS = (subjectRows ?? []).map((s) => ({
+    id: s.id,
+    kode: subjectCode(s.nama),
+    nama: s.nama,
+  }));
+
+  const { data: guruRows } = await supabase
+    .from("profiles_guru")
+    .select("id, nama, rating_avg, avatar_url, guru_subjects(subjects(nama))")
+    .order("rating_avg", { ascending: false })
+    .limit(10);
+
+  const GURU_ONLINE = (guruRows ?? []).map((g) => {
+    const mapelUtama = g.guru_subjects?.[0]?.subjects as unknown as { nama: string } | null;
+    return {
+      id: g.id,
+      nama: g.nama,
+      mapel: mapelUtama?.nama ?? "-",
+      rating: (g.rating_avg ?? 0).toFixed(1).replace(".", ","),
+      avatarUrl: g.avatar_url as string | null,
+    };
+  });
 
   return (
     <div className="flex min-h-dvh flex-col bg-ground font-body text-ink">
@@ -46,7 +74,7 @@ export default function SiswaHomePage() {
               Buat persiapan TKA-mu jadi lebih mudah
             </p>
             <Link
-              href="/siswa/guru/1"
+              href={SUBJECTS[0] ? `/siswa/guru/${SUBJECTS[0].id}` : "/siswa/home"}
               className="flex shrink-0 items-center gap-2 bg-white px-4 py-3 font-heading text-[13px] font-extrabold text-brand transition-colors hover:bg-brand-100 active:bg-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               Mulai
@@ -55,7 +83,7 @@ export default function SiswaHomePage() {
           </div>
         </header>
 
-        {/* GURU ONLINE — strip horizontal, foto selalu grayscale */}
+        {/* GURU ONLINE — strip horizontal */}
         <section>
           <div className="flex items-baseline justify-between px-5 pb-2.5 pt-5">
             <h2 className="font-heading text-[10.5px] font-extrabold uppercase tracking-[0.14em] text-brand">
@@ -70,7 +98,17 @@ export default function SiswaHomePage() {
             {GURU_ONLINE.map((g) => (
               <li key={g.id} className="w-[132px] shrink-0 bg-white p-3">
                 <Link href={`/siswa/guru/detail/${g.id}`} className="block">
-                  <div className="h-[76px] w-full bg-neutral-300 grayscale" />
+                  <div className="relative h-[76px] w-full bg-neutral-300">
+                    {g.avatarUrl && (
+                      <Image
+                        src={g.avatarUrl}
+                        alt={g.nama}
+                        fill
+                        unoptimized
+                        className="object-cover"
+                      />
+                    )}
+                  </div>
                   <p className="mt-2.5 font-heading text-[12.5px] font-bold leading-tight">
                     {g.nama}
                   </p>
@@ -90,12 +128,12 @@ export default function SiswaHomePage() {
             Mata Uji
           </h2>
 
-          <ul className="mx-5 mb-7 grid grid-cols-3 gap-0.5 border-2 border-ink bg-ink">
+          <ul className="mx-5 mb-7 grid grid-cols-3 gap-2">
             {SUBJECTS.map((s) => (
               <li key={s.id}>
                 <Link
                   href={`/siswa/guru/${s.id}`}
-                  className="flex h-full flex-col bg-white px-2.5 py-3 transition-colors hover:bg-brand-100 active:bg-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand"
+                  className="flex h-full flex-col border-2 border-ink bg-white px-2.5 py-3 transition-colors hover:bg-brand-100 active:bg-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand"
                 >
                   <span className="font-heading text-[20px] font-black leading-none -tracking-[0.02em]">
                     {s.kode}

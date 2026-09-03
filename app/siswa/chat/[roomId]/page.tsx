@@ -1,30 +1,7 @@
+import { notFound, redirect } from "next/navigation";
 import { ChatRoom } from "@/components/ChatRoom";
 import type { Pesan } from "@/components/ChatBubble";
-
-// TODO: ganti dengan query chat_rooms + profiles_guru by roomId
-const ROOM = {
-  guru: { nama: "Bu Sinta Wulandari, M.Pd", mapel: "Matematika", online: true },
-};
-
-// TODO: ganti dengan Supabase Realtime — messages where room_id = params.roomId
-const PESAN_AWAL: Pesan[] = [
-  { id: "1", milikSaya: false, teks: "Halo Rara, ada yang mau ditanyain soal limit?", waktu: "09.12" },
-  {
-    id: "2",
-    milikSaya: true,
-    teks: "Iya bu, aku bingung nomor 4 yang bentuk akar",
-    waktu: "09.14",
-    status: "Terkirim",
-  },
-  { id: "3", milikSaya: true, imageUrl: null, waktu: "09.14", status: "Foto soal" },
-  {
-    id: "4",
-    milikSaya: false,
-    teks:
-      "Oke, kalikan pembilang dan penyebut sama akar sekawannya dulu ya. Coba tulis langkah pertamanya, nanti aku cek.",
-    waktu: "09.19",
-  },
-];
+import { createClient } from "@/lib/supabase/server";
 
 export default async function SiswaChatRoomPage({
   params,
@@ -33,5 +10,59 @@ export default async function SiswaChatRoomPage({
 }) {
   const { roomId } = await params;
 
-  return <ChatRoom room={{ id: roomId, guru: ROOM.guru }} pesanAwal={PESAN_AWAL} />;
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
+
+  const { data: room } = await supabase
+    .from("chat_rooms")
+    .select("id, profiles_guru(nama, jenjang, avatar_url), subjects(nama)")
+    .eq("id", roomId)
+    .eq("siswa_id", user.id)
+    .maybeSingle();
+
+  if (!room) notFound();
+
+  const guru = room.profiles_guru as unknown as {
+    nama: string;
+    jenjang: string;
+    avatar_url: string | null;
+  } | null;
+  const mapel = room.subjects as unknown as { nama: string } | null;
+
+  const { data: messageRows } = await supabase
+    .from("messages")
+    .select("id, sender_id, content, image_url, created_at")
+    .eq("room_id", roomId)
+    .order("created_at", { ascending: true });
+
+  // TODO: status online sebenarnya butuh presence realtime — untuk sekarang dianggap selalu bisa dihubungi
+  const pesanAwal: Pesan[] = (messageRows ?? []).map((m) => {
+    const waktu = new Date(m.created_at).toLocaleTimeString("id-ID", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    const milikSaya = m.sender_id === user.id;
+    return m.image_url
+      ? { id: m.id, milikSaya, imageUrl: m.image_url, waktu }
+      : { id: m.id, milikSaya, teks: m.content ?? "", waktu };
+  });
+
+  return (
+    <ChatRoom
+      room={{
+        id: roomId,
+        guru: {
+          nama: guru?.nama ?? "Guru",
+          mapel: mapel?.nama ?? "-",
+          online: true,
+          avatarUrl: guru?.avatar_url ?? null,
+        },
+      }}
+      pesanAwal={pesanAwal}
+      siswaId={user.id}
+    />
+  );
 }

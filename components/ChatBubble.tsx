@@ -27,7 +27,7 @@ export function ChatBubble({ pesan }: { pesan: Pesan }) {
         </figure>
       ) : (
         <p
-          className={`m-0 max-w-[78%] px-3.5 py-2.5 text-[14px] leading-relaxed ${
+          className={`m-0 max-w-[78%] whitespace-pre-line px-3.5 py-2.5 text-[14px] leading-relaxed ${
             milikSaya ? "bg-brand text-white" : "border-2 border-ink bg-white text-ink"
           }`}
         >

@@ -21,8 +21,11 @@ const archivo = Archivo({
 });
 
 export const metadata: Metadata = {
-  title: "HaloGuru",
-  description: "Platform konsultasi siswa-guru HaloGuru",
+  title: "sahabatTKA",
+  description: "Platform konsultasi siswa-guru sahabatTKA",
+  icons: {
+    icon: "/logo-sahabattka.png",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -1,54 +1,6 @@
 import { PilihGuru } from "@/components/PilihGuru";
-
-// TODO: ganti dengan query subjects by id
-const SUBJECT_MAP: Record<string, string> = {
-  "1": "Fisika",
-  "2": "Biologi",
-  "3": "Kimia",
-  "4": "Matematika Tingkat Lanjut",
-  "5": "Matematika Wajib",
-  "6": "Bahasa Indonesia",
-};
-
-// TODO: ganti dengan query profiles_guru join guru_subjects where subject_id, rating_avg, review count, presence
-const GURU = [
-  {
-    id: "g1",
-    nama: "Bu Sinta Wulandari, M.Pd",
-    tahunMengajar: 6,
-    jenjang: "SMA",
-    rating: "4,9",
-    reviews: 128,
-    online: true,
-  },
-  {
-    id: "g2",
-    nama: "Pak Bima Nugraha, S.Pd",
-    tahunMengajar: 4,
-    jenjang: "SMA",
-    rating: "4,8",
-    reviews: 94,
-    online: true,
-  },
-  {
-    id: "g3",
-    nama: "Bu Nadia Kusuma, M.Pd",
-    tahunMengajar: 9,
-    jenjang: "SMA",
-    rating: "5,0",
-    reviews: 201,
-    online: false,
-  },
-  {
-    id: "g4",
-    nama: "Pak Dwi Handoko, M.Pd",
-    tahunMengajar: 8,
-    jenjang: "SMA",
-    rating: "4,7",
-    reviews: 76,
-    online: true,
-  },
-];
+import { createClient } from "@/lib/supabase/server";
+import { DUMMY_GURU_NAMA } from "@/lib/dummyChat";
 
 export default async function PilihGuruPage({
   params,
@@ -56,7 +8,39 @@ export default async function PilihGuruPage({
   params: Promise<{ subjectId: string }>;
 }) {
   const { subjectId } = await params;
-  const namaMapel = SUBJECT_MAP[subjectId] ?? "Mapel";
+  const supabase = await createClient();
 
-  return <PilihGuru subjectId={subjectId} namaMapel={namaMapel} guru={GURU} />;
+  const { data: subject } = await supabase
+    .from("subjects")
+    .select("nama")
+    .eq("id", subjectId)
+    .maybeSingle();
+
+  const { data: guruRows } = await supabase
+    .from("profiles_guru")
+    .select(
+      "id, nama, jenjang, rating_avg, avatar_url, created_at, reviews(count), guru_subjects!inner(subject_id)",
+    )
+    .eq("guru_subjects.subject_id", subjectId)
+    .order("rating_avg", { ascending: false });
+
+  // TODO: ganti dengan status presence realtime — untuk sekarang semua guru terdaftar dianggap bisa dihubungi
+  const guru = (guruRows ?? []).map((g) => ({
+    id: g.id,
+    nama: g.nama,
+    tahunMengajar: Math.max(
+      1,
+      new Date().getFullYear() - new Date(g.created_at).getFullYear(),
+    ),
+    jenjang: g.jenjang,
+    rating: (g.rating_avg ?? 0).toFixed(1).replace(".", ","),
+    reviews: g.reviews?.[0]?.count ?? 0,
+    online: true,
+    avatarUrl: g.avatar_url as string | null,
+  }));
+
+  // Pin subjek demo chat dummy supaya selalu tampil paling atas
+  guru.sort((a, b) => Number(b.nama === DUMMY_GURU_NAMA) - Number(a.nama === DUMMY_GURU_NAMA));
+
+  return <PilihGuru subjectId={subjectId} namaMapel={subject?.nama ?? "Mapel"} guru={guru} />;
 }

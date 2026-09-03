@@ -61,7 +61,7 @@ export default function SiswaChatListPage() {
                 href={`/siswa/chat/${r.id}`}
                 className="flex items-start gap-3 px-5 py-4 transition-colors hover:bg-brand-100 active:bg-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand"
               >
-                <div className="size-[46px] shrink-0 bg-neutral-300 grayscale" />
+                <div className="size-[46px] shrink-0 bg-neutral-300" />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-baseline gap-2">
                     <p className="flex-1 truncate font-heading text-[14.5px] font-bold leading-tight">

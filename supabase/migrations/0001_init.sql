@@ -1,4 +1,4 @@
--- HaloGuru initial schema
+-- sahabatTKA initial schema
 
 create type jenjang_type as enum ('SD', 'SMP', 'SMA', 'SMK');
 

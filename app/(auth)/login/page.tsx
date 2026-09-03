@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 import { loginSchema, type LoginInput } from "@/lib/validations/auth";
 
@@ -58,18 +59,8 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-dvh bg-ground font-body text-ink">
-      <header className="bg-brand px-5 pb-6 pt-16 text-white">
-        <span className="font-heading text-[12px] font-extrabold uppercase tracking-[0.18em]">
-          HaloGuru
-        </span>
-        <h1 className="mt-5 font-heading text-[34px] font-black leading-[1.02] -tracking-[0.03em]">
-          MASUK,
-          <br />
-          LANJUT
-          <br />
-          BELAJAR.
-        </h1>
-        <div className="mt-5 h-0.5 bg-white/50" />
+      <header className="flex items-center justify-center bg-brand px-5 pb-10 pt-16 text-white">
+        <Image src="/logo-sahabattka.png" alt="sahabatTKA" width={140} height={140} className="rounded" />
       </header>
 
       <form onSubmit={handleSubmit(onSubmit)} className="bg-white px-5 pb-2 pt-6">

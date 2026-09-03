@@ -7,6 +7,7 @@ import { useForm, Controller, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 import {
   jenjangEnum,
@@ -64,8 +65,9 @@ export default function RegisterSiswaPage() {
     <div className="min-h-dvh bg-ground font-body text-ink">
       <header className="bg-brand px-5 pb-[22px] pt-16 text-white">
         <div className="flex items-center justify-between">
-          <span className="font-heading text-[12px] font-extrabold uppercase tracking-[0.18em]">
-            HaloGuru
+          <span className="flex items-center gap-1.5 font-heading text-[12px] font-extrabold uppercase tracking-[0.18em]">
+            <Image src="/logo-sahabattka.png" alt="sahabatTKA" width={20} height={20} className="rounded" />
+            sahabatTKA
           </span>
           <span className="text-[11px] font-semibold opacity-90">Daftar sebagai Siswa</span>
         </div>

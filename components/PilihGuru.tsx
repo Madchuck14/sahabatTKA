@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ChevronLeft } from "lucide-react";
 
 type Guru = {
@@ -12,6 +13,7 @@ type Guru = {
   rating: string;
   reviews: number;
   online: boolean;
+  avatarUrl: string | null;
 };
 
 const FILTERS = ["Semua", "Online sekarang", "Rating tertinggi"] as const;
@@ -82,8 +84,18 @@ export function PilihGuru({
               className="flex items-start gap-3.5 px-5 py-4 transition-colors hover:bg-brand-100 active:bg-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand"
             >
               <div
-                className={`size-[58px] shrink-0 bg-neutral-300 grayscale ${g.online ? "" : "opacity-55"}`}
-              />
+                className={`relative size-[58px] shrink-0 overflow-hidden bg-neutral-300 ${g.online ? "" : "opacity-55"}`}
+              >
+                {g.avatarUrl && (
+                  <Image
+                    src={g.avatarUrl}
+                    alt={g.nama}
+                    fill
+                    unoptimized
+                    className="object-cover"
+                  />
+                )}
+              </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-1.5">
                   <span className={`size-[7px] shrink-0 ${g.online ? "bg-brand" : "bg-ink/30"}`} />
