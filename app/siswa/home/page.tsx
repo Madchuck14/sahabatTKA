@@ -33,14 +33,11 @@ export default async function SiswaHomePage() {
     ? await subjectsQuery.eq("jenjang", profile.jenjang)
     : await subjectsQuery;
 
-  // "Matematika" (umum) tumpang tindih dengan Matematika Wajib/Tingkat Lanjut di jenjang SMA
-  const SUBJECTS = (subjectRows ?? [])
-    .filter((s) => !(profile?.jenjang === "SMA" && s.nama === "Matematika"))
-    .map((s) => ({
-      id: s.id,
-      kode: subjectCode(s.nama),
-      nama: s.nama,
-    }));
+  const SUBJECTS = (subjectRows ?? []).map((s) => ({
+    id: s.id,
+    kode: subjectCode(s.nama),
+    nama: s.nama,
+  }));
 
   const { data: guruRows } = await supabase
     .from("profiles_guru")
