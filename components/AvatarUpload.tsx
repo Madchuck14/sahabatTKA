@@ -15,11 +15,13 @@ export function AvatarUpload({
   role,
   nama,
   currentUrl,
+  variant = "circle",
 }: {
   userId: string;
   role: "siswa" | "guru";
   nama: string;
   currentUrl: string | null;
+  variant?: "circle" | "square";
 }) {
   const [avatarUrl, setAvatarUrl] = useState(currentUrl);
   const [isUploading, setIsUploading] = useState(false);
@@ -71,6 +73,45 @@ export function AvatarUpload({
     } finally {
       setIsUploading(false);
     }
+  }
+
+  if (variant === "square") {
+    return (
+      <div className="flex flex-col items-center">
+        <button
+          type="button"
+          onClick={() => inputRef.current?.click()}
+          disabled={isUploading}
+          className="group relative focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          aria-label="Ganti foto profil"
+        >
+          <Avatar className="h-[88px] w-[88px] rounded-none border-2 border-white bg-brand-200">
+            <AvatarImage src={avatarUrl ?? undefined} alt={nama} className="rounded-none" />
+            <AvatarFallback className="rounded-none bg-brand-200 font-heading text-[30px] font-extrabold text-white">
+              {nama.charAt(0).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          <div
+            className={cn(
+              "absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100",
+              isUploading && "opacity-100"
+            )}
+          >
+            {isUploading && <Loader2 className="h-6 w-6 animate-spin text-white" />}
+          </div>
+          <span className="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center border-2 border-brand bg-white">
+            <Camera className="h-3.5 w-3.5 text-brand" />
+          </span>
+        </button>
+        <input
+          ref={inputRef}
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          className="hidden"
+          onChange={handleFileChange}
+        />
+      </div>
+    );
   }
 
   return (
