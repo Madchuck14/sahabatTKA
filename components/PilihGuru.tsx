@@ -101,7 +101,6 @@ export function PilihGuru({
                       src={g.avatarUrl}
                       alt={g.nama}
                       fill
-                      unoptimized
                       className="object-cover"
                     />
                   )}

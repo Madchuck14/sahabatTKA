@@ -125,7 +125,6 @@ export default async function SiswaHomePage() {
                         src={g.avatarUrl}
                         alt={g.nama}
                         fill
-                        unoptimized
                         className="object-cover"
                       />
                     )}

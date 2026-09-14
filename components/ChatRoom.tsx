@@ -202,7 +202,6 @@ export function ChatRoom({
               src={room.guru.avatarUrl}
               alt={room.guru.nama}
               fill
-              unoptimized
               className="object-cover"
             />
           )}
