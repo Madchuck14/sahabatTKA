@@ -184,7 +184,7 @@ export function ChatRoom({
 
   return (
     <div className="relative flex h-dvh flex-col bg-ground font-body text-ink">
-      <header className="flex shrink-0 items-center gap-3 border-b-2 border-ink bg-white px-4 pb-3 pt-14">
+      <header className="flex shrink-0 items-center gap-3 bg-white px-4 pb-3 pt-[calc(env(safe-area-inset-top)+12px)] shadow-sm">
         <Link
           href="/siswa/chat"
           aria-label="Kembali ke daftar chat"
@@ -196,7 +196,7 @@ export function ChatRoom({
         >
           <ChevronLeft size={22} strokeWidth={2.6} />
         </Link>
-        <div className="relative size-[38px] shrink-0 overflow-hidden bg-neutral-300">
+        <div className="relative size-[40px] shrink-0 overflow-hidden rounded-full bg-neutral-300">
           {room.guru.avatarUrl && (
             <Image
               src={room.guru.avatarUrl}
@@ -212,7 +212,7 @@ export function ChatRoom({
             {room.guru.nama}
           </p>
           <div className="mt-1 flex items-center gap-1.5">
-            {room.guru.online && <span className="size-[7px] shrink-0 bg-brand" />}
+            {room.guru.online && <span className="size-[7px] shrink-0 rounded-full bg-brand" />}
             <span className="text-[11px] font-semibold text-ink/60">
               {room.guru.online ? "Online" : "Offline"} · {room.guru.mapel}
             </span>
@@ -221,7 +221,7 @@ export function ChatRoom({
         <button
           type="button"
           onClick={() => setRating(true)}
-          className="min-h-11 shrink-0 border-2 border-ink px-2.5 font-heading text-[10px] font-extrabold uppercase tracking-[0.08em] transition-colors hover:bg-brand-100 active:bg-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          className="min-h-9 shrink-0 rounded-full bg-brand-100 px-3 font-heading text-[10px] font-extrabold uppercase tracking-[0.08em] text-brand-700 transition-colors hover:bg-brand-200 active:bg-brand-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
         >
           Nilai
         </button>
@@ -242,7 +242,7 @@ export function ChatRoom({
 
         {mengetik && (
           <div className="flex flex-col items-start gap-1.5">
-            <div className="m-0 flex w-fit items-center gap-1 border-2 border-ink bg-white px-3.5 py-3.5">
+            <div className="m-0 flex w-fit items-center gap-1 rounded-2xl bg-white px-3.5 py-3.5 shadow-sm">
               <span className="size-[6px] animate-bounce rounded-full bg-ink/50 [animation-delay:-0.3s]" />
               <span className="size-[6px] animate-bounce rounded-full bg-ink/50 [animation-delay:-0.15s]" />
               <span className="size-[6px] animate-bounce rounded-full bg-ink/50" />
@@ -258,7 +258,7 @@ export function ChatRoom({
           e.preventDefault();
           kirim();
         }}
-        className="flex shrink-0 items-center gap-2.5 border-t-2 border-ink bg-white px-3 pb-[calc(env(safe-area-inset-bottom)+10px)] pt-2.5"
+        className="flex shrink-0 items-center gap-2.5 bg-white px-3 pb-[calc(env(safe-area-inset-bottom)+10px)] pt-2.5 shadow-[0_-2px_10px_rgba(0,0,0,0.05)]"
       >
         <input
           ref={fileRef}
@@ -271,7 +271,7 @@ export function ChatRoom({
           type="button"
           aria-label="Kirim gambar"
           onClick={() => fileRef.current?.click()}
-          className="flex size-11 shrink-0 items-center justify-center border-2 border-ink transition-colors hover:bg-brand-100 active:bg-brand-200"
+          className="flex size-11 shrink-0 items-center justify-center rounded-full text-ink/50 transition-colors hover:bg-brand-100 active:bg-brand-200"
         >
           <ImageIcon size={19} strokeWidth={2.2} />
         </button>
@@ -280,12 +280,12 @@ export function ChatRoom({
           onChange={(e) => setDraft(e.target.value)}
           placeholder="Tulis pesan…"
           aria-label="Tulis pesan"
-          className="h-11 flex-1 rounded-2xl border-2 border-ink bg-white px-3 text-[14px] placeholder:text-ink/50 focus:outline-none"
+          className="h-11 flex-1 rounded-2xl bg-neutral-100 px-3.5 text-[14px] placeholder:text-neutral-500 focus:outline-none"
         />
         <button
           type="submit"
           aria-label="Kirim"
-          className="flex size-11 shrink-0 items-center justify-center bg-brand text-white transition-colors hover:bg-brand-600 active:bg-brand-700"
+          className="flex size-11 shrink-0 items-center justify-center rounded-full bg-brand text-white transition-colors hover:bg-brand-600 active:bg-brand-700"
         >
           <ArrowRight size={19} strokeWidth={2.4} />
         </button>

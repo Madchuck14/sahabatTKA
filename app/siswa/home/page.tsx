@@ -92,7 +92,7 @@ export default async function SiswaHomePage() {
               </p>
               <Link
                 href={SUBJECTS[0] ? `/siswa/guru/${SUBJECTS[0].id}` : "/siswa/home"}
-                className="flex shrink-0 items-center gap-2 bg-white px-4 py-3 font-heading text-[13px] font-extrabold text-brand transition-colors hover:bg-brand-100 active:bg-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="flex shrink-0 items-center gap-2 rounded-2xl bg-white px-4 py-3 font-heading text-[13px] font-extrabold text-brand transition-colors hover:bg-brand-100 active:bg-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Mulai
                 <ArrowRight size={15} strokeWidth={2.6} />

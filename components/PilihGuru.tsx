@@ -40,20 +40,32 @@ export function PilihGuru({
 
   return (
     <div className="flex min-h-dvh flex-col bg-ground font-body text-ink">
-      <header className="shrink-0 bg-brand px-5 pb-[18px] pt-16 text-white">
-        <Link href="/siswa/home" aria-label="Kembali ke beranda" className="flex items-center gap-2.5">
-          <ChevronLeft size={18} strokeWidth={2.6} />
-          <span className="text-[11px] font-semibold opacity-90">{namaMapel}</span>
-        </Link>
-        <h1 className="mt-3.5 font-heading text-[28px] font-black leading-[1.05] -tracking-[0.02em]">
-          Guru
-          <br />
-          {namaMapel}
-        </h1>
-        <div className="my-3 h-0.5 bg-white/50" />
-        <p className="text-[12.5px] leading-snug text-white/90">
-          {guru.length} guru tersedia · {onlineCount} online sekarang
-        </p>
+      <header className="relative shrink-0 overflow-hidden bg-gradient-to-br from-brand-600 via-brand to-brand-300 px-5 pb-[18px] pt-16 text-white">
+        <svg
+          className="pointer-events-none absolute inset-0 h-full w-full opacity-40"
+          viewBox="0 0 400 260"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <path d="M0,90 C110,150 290,10 400,70 L400,0 L0,0 Z" fill="#003BA3" fillOpacity="0.5" />
+          <path d="M0,260 C130,180 270,260 400,190 L400,260 Z" fill="#0051D4" fillOpacity="0.5" />
+        </svg>
+
+        <div className="relative">
+          <Link href="/siswa/home" aria-label="Kembali ke beranda" className="flex items-center gap-2.5">
+            <ChevronLeft size={18} strokeWidth={2.6} />
+            <span className="text-[11px] font-semibold opacity-90">{namaMapel}</span>
+          </Link>
+          <h1 className="mt-3.5 font-heading text-[28px] font-black leading-[1.05] -tracking-[0.02em]">
+            Guru
+            <br />
+            {namaMapel}
+          </h1>
+          <div className="my-3 h-0.5 bg-white/50" />
+          <p className="text-[12.5px] leading-snug text-white/90">
+            {guru.length} guru tersedia · {onlineCount} online sekarang
+          </p>
+        </div>
       </header>
 
       <div className="flex shrink-0 gap-2 overflow-x-auto px-5 py-3.5">
@@ -62,10 +74,10 @@ export function PilihGuru({
             key={f}
             type="button"
             onClick={() => setFilter(f)}
-            className={`min-h-11 whitespace-nowrap px-3 font-heading text-[11px] font-bold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
+            className={`min-h-11 whitespace-nowrap rounded-2xl px-3 font-heading text-[11px] font-bold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
               filter === f
-                ? "bg-ink font-extrabold text-white"
-                : "border-2 border-ink hover:bg-brand-100"
+                ? "bg-brand font-extrabold text-white"
+                : "bg-brand-100 hover:bg-brand-200"
             }`}
           >
             {f}
@@ -73,45 +85,46 @@ export function PilihGuru({
         ))}
       </div>
 
-      <ul className="flex-1 overflow-y-auto">
-        {daftar.map((g, i) => (
-          <li
-            key={g.id}
-            className={i === daftar.length - 1 ? "border-b-2 border-ink" : "border-b border-ink/40"}
-          >
+      <ul className="flex-1 overflow-y-auto px-2.5">
+        {daftar.map((g) => (
+          <li key={g.id}>
             <Link
               href={`/siswa/chat/new?guruId=${g.id}&subjectId=${subjectId}`}
-              className="flex items-start gap-3.5 px-5 py-4 transition-colors hover:bg-brand-100 active:bg-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand"
+              className="flex items-center gap-3.5 rounded-2xl px-2.5 py-3 transition-colors hover:bg-brand-100 active:bg-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
             >
-              <div
-                className={`relative size-[58px] shrink-0 overflow-hidden bg-neutral-300 ${g.online ? "" : "opacity-55"}`}
-              >
-                {g.avatarUrl && (
-                  <Image
-                    src={g.avatarUrl}
-                    alt={g.nama}
-                    fill
-                    unoptimized
-                    className="object-cover"
-                  />
-                )}
+              <div className="relative size-[52px] shrink-0">
+                <div
+                  className={`relative size-full overflow-hidden rounded-full bg-neutral-300 ${g.online ? "" : "opacity-55"}`}
+                >
+                  {g.avatarUrl && (
+                    <Image
+                      src={g.avatarUrl}
+                      alt={g.nama}
+                      fill
+                      unoptimized
+                      className="object-cover"
+                    />
+                  )}
+                </div>
+                <span
+                  className={`absolute bottom-0 right-0 size-3.5 rounded-full ring-2 ring-white ${g.online ? "bg-brand" : "bg-ink/30"}`}
+                />
               </div>
               <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-1.5">
-                  <span className={`size-[7px] shrink-0 ${g.online ? "bg-brand" : "bg-ink/30"}`} />
-                  <p className="font-heading text-[15px] font-bold leading-tight">{g.nama}</p>
-                </div>
-                <p className="mt-1.5 text-[12px] leading-snug text-ink/60">
+                <p className="truncate font-heading text-[14.5px] font-bold leading-tight">
+                  {g.nama}
+                </p>
+                <p className="mt-1 truncate text-[12.5px] leading-snug text-ink/55">
                   Mengajar {g.tahunMengajar} tahun · {g.jenjang}
                 </p>
-                <div className="mt-2 flex items-center gap-2.5">
-                  <span className="font-heading text-[12px] font-extrabold text-brand">
+                <div className="mt-1.5 flex items-center gap-2.5">
+                  <span className="font-heading text-[11.5px] font-extrabold text-brand">
                     {g.rating} ★
                   </span>
-                  <span className="text-[11.5px] text-ink/50">{g.reviews} review</span>
+                  <span className="text-[11px] text-ink/45">{g.reviews} review</span>
                 </div>
               </div>
-              <span className="shrink-0 border-2 border-ink px-2.5 py-2 font-heading text-[10.5px] font-extrabold tracking-[0.04em]">
+              <span className="shrink-0 rounded-full bg-brand px-3 py-1.5 font-heading text-[10.5px] font-extrabold tracking-[0.04em] text-white">
                 Chat
               </span>
             </Link>
