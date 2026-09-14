@@ -34,52 +34,56 @@ export default function SiswaChatListPage() {
 
   return (
     <div className="flex min-h-dvh flex-col bg-ground font-body text-ink">
-      {/* HEADER merah — lanjutan bahasa hero home */}
-      <header className="shrink-0 bg-brand px-5 pb-4 pt-14 text-white">
-        <span className="font-heading text-[12px] font-extrabold uppercase tracking-[0.18em]">
-          Halo, Sahabat TKA
-        </span>
-        <h1 className="mt-5 font-heading text-[30px] font-black leading-[0.98] -tracking-[0.03em]">
-          CHAT KAMU
-        </h1>
-        <div className="mb-3 mt-4 h-0.5 bg-white/50" />
-        <p className="text-[12.5px] leading-snug text-white/90">
-          {ROOMS.length} konsultasi aktif · {unreadTotal} pesan belum dibaca
-        </p>
+      {/* HEADER — lanjutan bahasa hero home */}
+      <header className="relative shrink-0 overflow-hidden bg-gradient-to-br from-brand-600 via-brand to-brand-300 px-5 pb-4 pt-14 text-white">
+        <svg
+          className="pointer-events-none absolute inset-0 h-full w-full opacity-40"
+          viewBox="0 0 400 260"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <path d="M0,90 C110,150 290,10 400,70 L400,0 L0,0 Z" fill="#003BA3" fillOpacity="0.5" />
+          <path d="M0,260 C130,180 270,260 400,190 L400,260 Z" fill="#0051D4" fillOpacity="0.5" />
+        </svg>
+
+        <div className="relative">
+          <span className="font-heading text-[12px] font-extrabold uppercase tracking-[0.18em]">
+            Halo, Sahabat TKA
+          </span>
+          <h1 className="mt-5 font-heading text-[30px] font-black leading-[0.98] -tracking-[0.03em]">
+            CHAT KAMU
+          </h1>
+          <div className="mb-3 mt-4 h-0.5 bg-white/50" />
+          <p className="text-[12.5px] leading-snug text-white/90">
+            {ROOMS.length} konsultasi aktif · {unreadTotal} pesan belum dibaca
+          </p>
+        </div>
       </header>
 
       {ROOMS.length > 0 ? (
-        <ul className="flex-1 overflow-y-auto">
-          {ROOMS.map((r, i) => (
-            <li
-              key={r.id}
-              className={
-                i === ROOMS.length - 1 ? "border-b-2 border-ink" : "border-b border-ink/40"
-              }
-            >
+        <ul className="flex-1 overflow-y-auto px-2.5 pb-[calc(env(safe-area-inset-bottom)+82px)]">
+          {ROOMS.map((r) => (
+            <li key={r.id}>
               <Link
                 href={`/siswa/chat/${r.id}`}
-                className="flex items-start gap-3 px-5 py-4 transition-colors hover:bg-brand-100 active:bg-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand"
+                className="flex items-center gap-3 rounded-2xl px-2.5 py-3 transition-colors hover:bg-brand-100 active:bg-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
               >
-                <div className="size-[46px] shrink-0 bg-neutral-300" />
+                <div className="size-[52px] shrink-0 rounded-full bg-neutral-300" />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-baseline gap-2">
                     <p className="flex-1 truncate font-heading text-[14.5px] font-bold leading-tight">
                       {r.guru}
                     </p>
-                    <span className="shrink-0 text-[10.5px] font-semibold text-ink/50">
+                    <span className="shrink-0 text-[11px] font-semibold text-ink/45">
                       {r.time}
                     </span>
                   </div>
-                  <p className="mt-1.5 font-heading text-[9.5px] font-extrabold uppercase tracking-[0.12em] text-brand">
-                    {r.mapel}
-                  </p>
-                  <div className="mt-1.5 flex items-center gap-2">
-                    <p className="flex-1 truncate text-[12.5px] leading-snug text-ink/65">
+                  <div className="mt-1 flex items-center gap-2">
+                    <p className="flex-1 truncate text-[13px] leading-snug text-ink/55">
                       {r.last}
                     </p>
                     {r.unread > 0 && (
-                      <span className="shrink-0 bg-brand px-1.5 py-1 font-heading text-[10.5px] font-extrabold text-white">
+                      <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-brand text-[10.5px] font-bold text-white">
                         {r.unread}
                         <span className="sr-only"> pesan belum dibaca</span>
                       </span>
@@ -89,7 +93,7 @@ export default function SiswaChatListPage() {
               </Link>
             </li>
           ))}
-          <li className="p-5 text-[12px] leading-relaxed text-ink/50">
+          <li className="px-2.5 py-5 text-[12px] leading-relaxed text-ink/50">
             Chat lama otomatis diarsipkan setelah 30 hari nggak ada balasan.
           </li>
         </ul>

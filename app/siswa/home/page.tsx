@@ -58,34 +58,46 @@ export default async function SiswaHomePage() {
 
   return (
     <div className="flex min-h-dvh flex-col bg-ground font-body text-ink">
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto pb-[calc(env(safe-area-inset-bottom)+82px)]">
         {/* HERO — poster merah, semuanya flush left, tanpa radius */}
-        <header className="bg-brand px-5 pb-6 pt-14 text-white">
-          <span className="font-heading text-[12px] font-extrabold uppercase tracking-[0.18em]">
-            Halo, {siswa.nama}
-          </span>
+        <header className="relative overflow-hidden bg-gradient-to-br from-brand-600 via-brand to-brand-300 px-5 pb-6 pt-14 text-white">
+          <svg
+            className="pointer-events-none absolute inset-0 h-full w-full opacity-40"
+            viewBox="0 0 400 260"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <path d="M0,90 C110,150 290,10 400,70 L400,0 L0,0 Z" fill="#003BA3" fillOpacity="0.5" />
+            <path d="M0,260 C130,180 270,260 400,190 L400,260 Z" fill="#0051D4" fillOpacity="0.5" />
+          </svg>
 
-          <h1 className="mt-7 font-heading text-[40px] font-black leading-[0.95] -tracking-[0.03em]">
-            TEMAN
-            <br />
-            PERSIAPAN
-            <br />
-            TKA-MU
-          </h1>
+          <div className="relative">
+            <span className="font-heading text-[12px] font-extrabold uppercase tracking-[0.18em]">
+              Halo, {siswa.nama}
+            </span>
 
-          <div className="my-5 h-0.5 bg-white/50" />
+            <h1 className="mt-7 font-heading text-[40px] font-black leading-[0.95] -tracking-[0.03em]">
+              TEMAN
+              <br />
+              PERSIAPAN
+              <br />
+              TKA-MU
+            </h1>
 
-          <div className="flex items-center justify-between gap-3">
-            <p className="max-w-[200px] text-[13px] leading-snug text-white/90">
-              Buat persiapan TKA-mu jadi lebih mudah
-            </p>
-            <Link
-              href={SUBJECTS[0] ? `/siswa/guru/${SUBJECTS[0].id}` : "/siswa/home"}
-              className="flex shrink-0 items-center gap-2 bg-white px-4 py-3 font-heading text-[13px] font-extrabold text-brand transition-colors hover:bg-brand-100 active:bg-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-            >
-              Mulai
-              <ArrowRight size={15} strokeWidth={2.6} />
-            </Link>
+            <div className="my-5 h-0.5 bg-white/50" />
+
+            <div className="flex items-center justify-between gap-3">
+              <p className="max-w-[200px] text-[13px] leading-snug text-white/90">
+                Buat persiapan TKA-mu jadi lebih mudah
+              </p>
+              <Link
+                href={SUBJECTS[0] ? `/siswa/guru/${SUBJECTS[0].id}` : "/siswa/home"}
+                className="flex shrink-0 items-center gap-2 bg-white px-4 py-3 font-heading text-[13px] font-extrabold text-brand transition-colors hover:bg-brand-100 active:bg-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                Mulai
+                <ArrowRight size={15} strokeWidth={2.6} />
+              </Link>
+            </div>
           </div>
         </header>
 
@@ -100,11 +112,14 @@ export default async function SiswaHomePage() {
             </Link>
           </div>
 
-          <ul className="mx-5 flex gap-0.5 overflow-x-auto border-2 border-ink bg-ink">
+          <ul className="mx-5 flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1">
             {GURU_ONLINE.map((g) => (
-              <li key={g.id} className="w-[132px] shrink-0 bg-white p-3">
+              <li
+                key={g.id}
+                className="w-[132px] shrink-0 snap-start rounded-2xl bg-white p-3 shadow-sm"
+              >
                 <Link href={`/siswa/guru/detail/${g.id}`} className="block">
-                  <div className="relative h-[76px] w-full bg-neutral-300">
+                  <div className="relative h-[76px] w-full overflow-hidden rounded-xl bg-neutral-300">
                     {g.avatarUrl && (
                       <Image
                         src={g.avatarUrl}
@@ -139,7 +154,7 @@ export default async function SiswaHomePage() {
               <li key={s.id}>
                 <Link
                   href={`/siswa/guru/${s.id}`}
-                  className="flex h-full flex-col border-2 border-ink bg-white px-2.5 py-3 transition-colors hover:bg-brand-100 active:bg-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand"
+                  className="flex h-full flex-col rounded-2xl bg-white px-2.5 py-3 shadow-sm transition-colors hover:bg-brand-100 active:bg-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
                 >
                   <span className="font-heading text-[20px] font-black leading-none -tracking-[0.02em]">
                     {s.kode}

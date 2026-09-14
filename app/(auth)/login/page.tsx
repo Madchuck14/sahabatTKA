@@ -59,15 +59,30 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-dvh bg-ground font-body text-ink">
-      <header className="flex items-center justify-center bg-brand px-5 pb-10 pt-16 text-white">
-        <Image src="/logo-sahabattka.png" alt="sahabatTKA" width={140} height={140} className="rounded" />
+      <header className="relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-brand-600 via-brand to-brand-300 px-5 pb-10 pt-16 text-white">
+        <svg
+          className="pointer-events-none absolute inset-0 h-full w-full opacity-40"
+          viewBox="0 0 400 260"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <path d="M0,90 C110,150 290,10 400,70 L400,0 L0,0 Z" fill="#003BA3" fillOpacity="0.5" />
+          <path d="M0,260 C130,180 270,260 400,190 L400,260 Z" fill="#0051D4" fillOpacity="0.5" />
+        </svg>
+        <Image
+          src="/logo-sahabattka.png"
+          alt="sahabatTKA"
+          width={210}
+          height={210}
+          className="relative rounded"
+        />
       </header>
 
       <form onSubmit={handleSubmit(onSubmit)} className="bg-white px-5 pb-2 pt-6">
-        <label className="block font-heading text-[10px] font-extrabold uppercase tracking-[0.1em] text-ink/60">
+        <label className="block text-center font-heading text-[15px] font-extrabold uppercase tracking-[0.1em] text-ink/60">
           Masuk sebagai
         </label>
-        <div className="mt-2 grid grid-cols-2 border-2 border-ink" role="radiogroup">
+        <div className="mt-2 grid grid-cols-2 gap-2" role="radiogroup">
           {(["siswa", "guru"] as Role[]).map((r) => (
             <button
               key={r}
@@ -75,12 +90,10 @@ export default function LoginPage() {
               role="radio"
               aria-checked={role === r}
               onClick={() => setRole(r)}
-              className={`min-h-11 py-2.5 text-center font-heading text-[12.5px] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand ${
-                r === "guru" ? "border-l-2 border-ink" : ""
-              } ${
+              className={`min-h-11 rounded-2xl py-2.5 text-center font-heading text-[12.5px] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
                 role === r
                   ? "bg-brand font-extrabold text-white"
-                  : "bg-white font-bold text-ink hover:bg-brand-100"
+                  : "bg-neutral-100 font-bold text-ink hover:bg-brand-100"
               }`}
             >
               {r === "siswa" ? "Siswa" : "Guru"}
@@ -98,7 +111,7 @@ export default function LoginPage() {
           id="email"
           type="email"
           placeholder="nama@email.com"
-          className="mt-2 w-full border-2 border-ink bg-white px-3 py-3 text-[14px] placeholder:text-ink/45 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand"
+          className="mt-2 w-full rounded-2xl bg-neutral-100 px-3 py-3 text-[14px] placeholder:text-neutral-500 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
           {...register("email")}
         />
         {errors.email && (
@@ -111,12 +124,12 @@ export default function LoginPage() {
         >
           Kata sandi
         </label>
-        <div className="mt-2 flex items-center border-2 border-ink bg-white px-3 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-brand">
+        <div className="mt-2 flex items-center rounded-2xl bg-neutral-100 px-3 focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-brand">
           <input
             id="password"
             type={showPw ? "text" : "password"}
             placeholder="••••••••"
-            className="min-h-11 flex-1 bg-transparent py-3 text-[14px] placeholder:text-ink/45 focus:outline-none"
+            className="min-h-11 flex-1 bg-transparent py-3 text-[14px] placeholder:text-neutral-500 focus:outline-none"
             {...register("password")}
           />
           <button
@@ -141,7 +154,7 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="mt-5 w-full bg-brand px-4 py-3.5 text-left font-heading text-[14px] font-extrabold text-white transition-colors hover:bg-brand-600 active:bg-brand-700 disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          className="mt-5 w-full rounded-2xl bg-brand px-4 py-3.5 text-center font-heading text-[14px] font-extrabold text-white transition-colors hover:bg-brand-600 active:bg-brand-700 disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
         >
           {isSubmitting ? "Memeriksa…" : "Masuk"}
         </button>

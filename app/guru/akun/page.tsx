@@ -19,7 +19,7 @@ export default async function GuruAkunPage() {
 
   return (
     <div className="flex min-h-dvh flex-col">
-      <main className="flex-1 p-6">
+      <main className="flex-1 p-6 pb-[calc(env(safe-area-inset-bottom)+82px)]">
         <h1 className="mb-6 text-xl font-semibold">Akun Guru</h1>
         <AvatarUpload
           userId={user.id}

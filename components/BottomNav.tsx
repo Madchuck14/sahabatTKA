@@ -20,28 +20,26 @@ export function BottomNav({ role }: { role: "siswa" | "guru" }) {
         ];
 
   return (
-    <nav className="shrink-0 border-t-2 border-ink bg-white pb-[calc(env(safe-area-inset-bottom)+10px)] pt-2.5">
-      <ul className="flex">
+    <nav className="fixed inset-x-0 bottom-0 z-20 shrink-0 px-5 pb-[calc(env(safe-area-inset-bottom)+14px)]">
+      <ul className="flex items-center justify-around rounded-full bg-white px-3 py-2 shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
         {items.map(({ href, label, icon: Icon }) => {
           const active = pathname.startsWith(href);
           return (
             <li key={href} className="flex-1">
               <Link
                 href={href}
+                aria-label={label}
                 aria-current={active ? "page" : undefined}
-                className={`flex min-h-11 flex-col items-center gap-1.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
-                  active ? "text-brand" : "text-ink/45"
-                }`}
+                className="flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
               >
-                <Icon size={21} strokeWidth={2.2} />
                 <span
-                  className={
+                  className={`flex size-11 items-center justify-center rounded-full transition-all ${
                     active
-                      ? "font-heading text-[10px] font-extrabold tracking-[0.06em]"
-                      : "text-[10px] font-semibold tracking-[0.06em]"
-                  }
+                      ? "bg-gradient-to-br from-brand-300 via-brand to-brand-600 text-white shadow-[0_6px_14px_rgba(22,122,255,0.45)]"
+                      : "text-ink/35"
+                  }`}
                 >
-                  {label}
+                  <Icon size={20} strokeWidth={2.3} />
                 </span>
               </Link>
             </li>
