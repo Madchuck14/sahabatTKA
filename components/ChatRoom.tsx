@@ -280,7 +280,7 @@ export function ChatRoom({
           onChange={(e) => setDraft(e.target.value)}
           placeholder="Tulis pesan…"
           aria-label="Tulis pesan"
-          className="h-11 flex-1 border-2 border-ink bg-white px-3 text-[14px] placeholder:text-ink/50 focus:outline-none"
+          className="h-11 flex-1 rounded-2xl border-2 border-ink bg-white px-3 text-[14px] placeholder:text-ink/50 focus:outline-none"
         />
         <button
           type="submit"
